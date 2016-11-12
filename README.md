@@ -1,5 +1,5 @@
 # myamilinux
-Setup my Debian 8 defaults in auto mode.
+Setup my AMI Linux defaults in auto mode.
 
 Get my scripts from this GIT and run (in the one line command):
 
