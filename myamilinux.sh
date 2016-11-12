@@ -61,6 +61,7 @@ mv /bin/vi /bin/vi_orig
 ln -s /usr/bin/nano /bin/vi
 mv /usr/bin/vim /usr/bin/vim_orig
 ln -s /usr/bin/nano /usr/bin/vim
+sed -i "s|^use_internal_edit=.*|use_internal_edit=0|" /root/.mc/ini
 echo "=========================================================="
 
 echo "__________________________________________________________"
