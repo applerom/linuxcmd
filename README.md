@@ -3,11 +3,11 @@ Setup my AMI Linux defaults in auto mode.
 
 Get my scripts from this GIT and run (in the one line command):
 
-* sudo bash -c "$(wget -q -O- https://raw.githubusercontent.com/applerom/mydebian/master/start.sh)"
+* sudo bash -c "$(wget -q -O- https://raw.githubusercontent.com/applerom/myamilinux/master/start.sh)"
 
 or
 
-* sudo bash -c "$(wget -q -O- https://raw.githubusercontent.com/applerom/mydebian/master/start.sh)" > 1.txt
+* sudo bash -c "$(wget -q -O- https://raw.githubusercontent.com/applerom/myamilinux/master/start.sh)" > 1.txt
 
 For common use:
 
