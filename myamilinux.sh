@@ -30,6 +30,7 @@ MYPS1+="'" #end of PS1
 sudomc="sudo -H mc"
 if ! grep -q "$sudomc" $MYHOME/$AUTOEXEC_FILE ; then # protect from repeated running
 	echo $MYPS1 >> $MYHOME/$AUTOEXEC_FILE
+	echo "df -k | awk '\$NF==\"/\"{printf \"Disk Usage: %s\n\", \$5}'" >> $MYHOME/$AUTOEXEC_FILE
 	echo $sudomc >> $MYHOME/$AUTOEXEC_FILE
 
 	echo $MYPS1 >> /root/.bashrc
@@ -78,8 +79,6 @@ echo "__________________________________________________________"
 if [ ! -f $MYSH ] ; then # protect from repeated running
 	cat <<EOF >>$MYSH
 sudo hostname $MYSITE
-echo -e $OS_VER_SHOW
-df -k | awk '\$NF=="/"{printf "Disk Usage: %s\n", \$5}'
 EOF
 fi
 echo "=========================================================="
