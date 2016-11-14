@@ -1,5 +1,7 @@
 MYHOME=/home/ec2-user
-MYSITE=my.amilinux # enter name (DNS) of your system here
+if [ -z ${MYSITE+z} ]; then
+	MYSITE=my.amilinux # enter name (DNS) of your system here
+fi
 OS_VER_SHOW=
 AUTOEXEC_FILE=".bashrc"
 MYSH=/etc/profile.d/my.sh

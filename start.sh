@@ -2,13 +2,6 @@
 ### \myamilinux\start.sh
 ################################################################################
 MYSTART=myamilinux
-if [ -z $1 ]; then
-	MYNAME=my.amilinux
-else
-	MYNAME=$1
-fi
-echo "__________________________________________________________"
-echo "MYNAME=$MYNAME"
 
 echo "__________________________________________________________"
 echo "check root"
