@@ -52,17 +52,22 @@ echo "Nano tuning"
 echo "__________________________________________________________"
 sed -i 's|color green|color brightgreen|' /usr/share/nano/xml.nanorc
 sed -i 's~(cat|cd|chmod|chown|cp|echo|env|export|grep|install|let|ln|make|mkdir|mv|rm|sed|set|tar|touch|umask|unset)~(apt-get|awk|cat|cd|chmod|chown|cp|cut|echo|env|export|grep|install|let|ln|make|mkdir|mv|rm|sed|set|tar|touch|umask|unset)~' /usr/share/nano/sh.nanorc
-if ! grep -q "/bin/nano" $MYHOME/.selected_editor ; then # protect from repeated running
+if ! grep -q "/bin/nano" $MYHOME/.selected_editor > /dev/null 2> /dev/null ; then # protect from repeated running
 	echo "SELECTED_EDITOR=/bin/nano" >> $MYHOME/.selected_editor
 fi
-if ! grep -q "/bin/nano" /root/.selected_editor ; then # protect from repeated running
+if ! grep -q "/bin/nano" /root/.selected_editor > /dev/null 2> /dev/null ; then # protect from repeated running
 	echo "SELECTED_EDITOR=/bin/nano" >> /root/.selected_editor
 fi
 mv /bin/vi /bin/vi_orig
 ln -s /usr/bin/nano /bin/vi
 mv /usr/bin/vim /usr/bin/vim_orig
 ln -s /usr/bin/nano /usr/bin/vim
-sed -i "s|^use_internal_edit=.*|use_internal_edit=0|" /root/.mc/ini
+if [ -f /root/.mc/ini ] ; then # protect from repeated running
+	sed -i "s|^use_internal_edit=.*|use_internal_edit=0|" /root/.mc/ini
+else
+	echo "[Midnight-Commander]" > /root/.mc/ini
+	echo "use_internal_edit=0" >> /root/.mc/ini
+fi
 echo "=========================================================="
 
 echo "__________________________________________________________"
