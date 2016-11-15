@@ -9,6 +9,8 @@ or
 
 * MYSITE=my.hostname.here && sudo bash -c "$(wget -q -O- https://raw.githubusercontent.com/applerom/myamilinux/master/start.sh)"
 
+or
+
 * sudo bash -c "$(wget -q -O- https://raw.githubusercontent.com/applerom/myamilinux/master/start.sh)" > 1.txt
 
 For common use:
