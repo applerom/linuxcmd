@@ -27,12 +27,12 @@ MYPS1+="$Yellow\\H" # Hostname
 MYPS1+=" $Blue$MyDateTime\n" # current time & date and new string
 MYPS1+=" $Cyan\\w $GreenLight\\\$$NoColour " # current dir + $
 MYPS1+="'" #end of PS1
-sudomc="sudo -H mc"
-if ! grep -q "$sudomc" $MYHOME/$AUTOEXEC_FILE ; then # protect from repeated running
+if ! grep -q "df -k" $MYHOME/$AUTOEXEC_FILE ; then # protect from repeated running
 	echo $MYPS1 >> $MYHOME/$AUTOEXEC_FILE
 	echo "df -k | awk '\$NF==\"/\"{printf \"Disk Usage: %s\n\", \$5}'" >> $MYHOME/$AUTOEXEC_FILE
-	echo $sudomc >> $MYHOME/$AUTOEXEC_FILE
-
+	if [ -z ${SUDOMC+z} ]; then
+		echo $SUDOMC >> $MYHOME/$AUTOEXEC_FILE
+	fi
 	echo $MYPS1 >> /root/.bashrc
 fi
 echo "=========================================================="
@@ -62,7 +62,13 @@ mv /bin/vi /bin/vi_orig
 ln -s /usr/bin/nano /bin/vi
 mv /usr/bin/vim /usr/bin/vim_orig
 ln -s /usr/bin/nano /usr/bin/vim
-if [ -f /root/.mc/ini ] ; then # protect from repeated running
+if [ -f $MYHOME/.mc/ini ] ; then
+	sed -i "s|^use_internal_edit=.*|use_internal_edit=0|" $MYHOME/.mc/ini
+else
+	echo "[Midnight-Commander]" > $MYHOME/.mc/ini
+	echo "use_internal_edit=0" >> $MYHOME/.mc/ini
+fi
+if [ -f /root/.mc/ini ] ; then
 	sed -i "s|^use_internal_edit=.*|use_internal_edit=0|" /root/.mc/ini
 else
 	echo "[Midnight-Commander]" > /root/.mc/ini
@@ -89,7 +95,7 @@ fi
 echo "=========================================================="
 
 echo "=========================================================="
-echo "END of mydebian.sh"
+echo "END of myamilinux.sh"
 echo "=========================================================="
 
 exit 0
