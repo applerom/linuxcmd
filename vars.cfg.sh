@@ -1,4 +1,5 @@
-MYHOME=/home/ec2-user
+MYUSER=ec2-user
+MYHOME=/home/$MYUSER
 if [ -z ${MYSITE+z} ]; then
 	MYSITE=my.amilinux # enter name (DNS) of your system here
 fi

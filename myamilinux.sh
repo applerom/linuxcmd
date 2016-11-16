@@ -65,12 +65,14 @@ ln -s /usr/bin/nano /usr/bin/vim
 if [ -f $MYHOME/.mc/ini ] ; then
 	sed -i "s|^use_internal_edit=.*|use_internal_edit=0|" $MYHOME/.mc/ini
 else
+	mkdir $MYHOME/.mc > /dev/null 2> /dev/null
 	echo "[Midnight-Commander]" > $MYHOME/.mc/ini
 	echo "use_internal_edit=0" >> $MYHOME/.mc/ini
 fi
 if [ -f /root/.mc/ini ] ; then
 	sed -i "s|^use_internal_edit=.*|use_internal_edit=0|" /root/.mc/ini
 else
+	mkdir /root/.mc > /dev/null 2> /dev/null
 	echo "[Midnight-Commander]" > /root/.mc/ini
 	echo "use_internal_edit=0" >> /root/.mc/ini
 fi
@@ -93,6 +95,8 @@ sudo hostname $MYSITE
 EOF
 fi
 echo "=========================================================="
+
+chown -R $MYUSER:$MYUSER $MYHOME
 
 echo "=========================================================="
 echo "END of myamilinux.sh"
