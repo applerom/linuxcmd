@@ -58,7 +58,7 @@ fi
 if ! grep -q "/bin/nano" /root/.selected_editor > /dev/null 2> /dev/null ; then # protect from repeated running
 	echo "SELECTED_EDITOR=/bin/nano" >> /root/.selected_editor
 fi
-if [[ $REPLACE_VIM_WITH_NANO == "yes" ]]
+if [[ $REPLACE_VIM_WITH_NANO == "yes" ]] ; then
 	if [ -f /bin/vi_orig ] ; then # protect from repeated running
 		rm /bin/vi	
 		ln -s /usr/bin/nano /bin/vi
@@ -71,7 +71,7 @@ if [[ $REPLACE_VIM_WITH_NANO == "yes" ]]
 		ln -s /usr/bin/nano /usr/bin/vim
 	fi
 fi
-if [[ $USE_INTERNAL_EDITOR_FOR_MC == "no" ]]
+if [[ $USE_INTERNAL_EDITOR_FOR_MC == "no" ]] ; then
 	if [ -f $MYHOME/.mc/ini ] ; then
 		sed -i "s|^use_internal_edit=.*|use_internal_edit=0|" $MYHOME/.mc/ini
 	else
