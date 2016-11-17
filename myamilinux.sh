@@ -41,10 +41,10 @@ echo "__________________________________________________________"
 echo "create www dir and useful links"
 echo "__________________________________________________________"
 mkdir -p /var/www
-ln -s /var/www $MYHOME
-ln -s /etc $MYHOME
-ln -s /usr/local/src $MYHOME
-ln -s /var/log $MYHOME
+ln -s /var/www $MYHOME			> /dev/null 2> /dev/null
+ln -s /etc $MYHOME				> /dev/null 2> /dev/null
+ln -s /usr/local/src $MYHOME	> /dev/null 2> /dev/null
+ln -s /var/log $MYHOME			> /dev/null 2> /dev/null
 echo "=========================================================="
 
 echo "__________________________________________________________"
@@ -58,23 +58,34 @@ fi
 if ! grep -q "/bin/nano" /root/.selected_editor > /dev/null 2> /dev/null ; then # protect from repeated running
 	echo "SELECTED_EDITOR=/bin/nano" >> /root/.selected_editor
 fi
-mv /bin/vi /bin/vi_orig
-ln -s /usr/bin/nano /bin/vi
-mv /usr/bin/vim /usr/bin/vim_orig
-ln -s /usr/bin/nano /usr/bin/vim
-if [ -f $MYHOME/.mc/ini ] ; then
-	sed -i "s|^use_internal_edit=.*|use_internal_edit=0|" $MYHOME/.mc/ini
-else
-	mkdir $MYHOME/.mc > /dev/null 2> /dev/null
-	echo "[Midnight-Commander]" > $MYHOME/.mc/ini
-	echo "use_internal_edit=0" >> $MYHOME/.mc/ini
+if [[ $REPLACE_VIM_WITH_NANO == "yes" ]]
+	if [ -f /bin/vi_orig ] ; then # protect from repeated running
+		rm /bin/vi	
+		ln -s /usr/bin/nano /bin/vi
+		rm /usr/bin/vim
+		ln -s /usr/bin/nano /usr/bin/vim
+	else
+		mv /bin/vi /bin/vi_orig
+		ln -s /usr/bin/nano /bin/vi
+		mv /usr/bin/vim /usr/bin/vim_orig
+		ln -s /usr/bin/nano /usr/bin/vim
+	fi
 fi
-if [ -f /root/.mc/ini ] ; then
-	sed -i "s|^use_internal_edit=.*|use_internal_edit=0|" /root/.mc/ini
-else
-	mkdir /root/.mc > /dev/null 2> /dev/null
-	echo "[Midnight-Commander]" > /root/.mc/ini
-	echo "use_internal_edit=0" >> /root/.mc/ini
+if [[ $USE_INTERNAL_EDITOR_FOR_MC == "no" ]]
+	if [ -f $MYHOME/.mc/ini ] ; then
+		sed -i "s|^use_internal_edit=.*|use_internal_edit=0|" $MYHOME/.mc/ini
+	else
+		mkdir $MYHOME/.mc > /dev/null 2> /dev/null
+		echo "[Midnight-Commander]" > $MYHOME/.mc/ini
+		echo "use_internal_edit=0" >> $MYHOME/.mc/ini
+	fi
+	if [ -f /root/.mc/ini ] ; then
+		sed -i "s|^use_internal_edit=.*|use_internal_edit=0|" /root/.mc/ini
+	else
+		mkdir /root/.mc > /dev/null 2> /dev/null
+		echo "[Midnight-Commander]" > /root/.mc/ini
+		echo "use_internal_edit=0" >> /root/.mc/ini
+	fi
 fi
 echo "=========================================================="
 

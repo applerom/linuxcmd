@@ -8,3 +8,5 @@ AUTOEXEC_FILE=".bashrc"
 MYSH=/etc/profile.d/my.sh
 MYCERT_DIR=$MYHOME/certs
 #SUDOMC="sudo -H mc"
+REPLACE_VIM_WITH_NANO=yes
+USE_INTERNAL_EDITOR_FOR_MC=no
