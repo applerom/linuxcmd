@@ -29,7 +29,6 @@ MYPS1+=" $Cyan\\w $GreenLight\\\$$NoColour " # current dir + $
 MYPS1+="'" #end of PS1
 if ! grep -q "df -k" $MYHOME/$AUTOEXEC_FILE ; then # protect from repeated running
 	echo $MYPS1 >> $MYHOME/$AUTOEXEC_FILE
-	echo "df -k | awk '\$NF==\"/\"{printf \"Disk Usage: %s\n\", \$5}'" >> $MYHOME/$AUTOEXEC_FILE
 	if [ -z ${SUDOMC+z} ]; then
 		echo $SUDOMC >> $MYHOME/$AUTOEXEC_FILE
 	fi
@@ -41,10 +40,13 @@ echo "__________________________________________________________"
 echo "create www dir and useful links"
 echo "__________________________________________________________"
 mkdir -p /var/www
+mkdir -p $MYCERT_DIR
 ln -s /var/www $MYHOME			> /dev/null 2> /dev/null
 ln -s /etc $MYHOME				> /dev/null 2> /dev/null
 ln -s /usr/local/src $MYHOME	> /dev/null 2> /dev/null
 ln -s /var/log $MYHOME			> /dev/null 2> /dev/null
+mkdir -p $MYCERT_DIR
+ln -s $MYCERT_DIR $MYHOME		> /dev/null 2> /dev/null
 echo "=========================================================="
 
 echo "__________________________________________________________"
@@ -103,6 +105,7 @@ echo "__________________________________________________________"
 if [ ! -f $MYSH ] ; then # protect from repeated running
 	cat <<EOF >>$MYSH
 sudo hostname $MYSITE
+df -k | awk '\$NF=="/"{printf "Disk Usage: %s\n", \$5}'
 EOF
 fi
 echo "=========================================================="
