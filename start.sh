@@ -3,9 +3,7 @@
 ################################################################################
 MYSTART=myamilinux
 
-echo "__________________________________________________________"
-echo "check root"
-echo "__________________________________________________________"
+# check root"
 if [[ $UID != 0 ]] ; then 
 	echo "Run only under root! Add sudo at the begin and repeat your command again."
 	echo "Ex.:"
@@ -13,47 +11,35 @@ if [[ $UID != 0 ]] ; then
 	echo "=========================================================="
 	exit 1
 fi
-echo "=========================================================="
 
-echo "__________________________________________________________"
-echo "create tmp dir"
-echo "__________________________________________________________"
+# create tmp dir"
 MY_TMP_DIR=$(mktemp -d /tmp/my_script.XXX) # create_tmp_dir
 trap "rm -R ${MY_TMP_DIR}" SIGTERM SIGINT EXIT
 if [[ ! -O ${MY_TMP_DIR} ]]; then # Check that the dir exists and is owned by our euid (root)
 	echo "Unable to create temporary directory MY_TMP_DIR."
+	echo "=========================================================="
 	exit 1
 fi
 chmod 700 $MY_TMP_DIR
-echo "=========================================================="
 
-echo "__________________________________________________________"
-echo "check for git"
-echo "__________________________________________________________"
+# check for git"
 if ! which git > /dev/null 2> /dev/null ; then
 	echo "___Install git"
 	yum install -y git
+	echo "=========================================================="
 fi
-echo "=========================================================="
 
-echo "__________________________________________________________"
-echo "clone from git to tmp $MY_TMP_DIR"
-echo "__________________________________________________________"
+echo "___ clone from git to tmp $MY_TMP_DIR"
 cd $MY_TMP_DIR
 git clone https://github.com/applerom/$MYSTART
 echo "=========================================================="
 
-echo "__________________________________________________________"
-echo "start $MYSTART.sh from git"
-echo "__________________________________________________________"
+echo "___ start $MYSTART.sh from git"
 cd $MYSTART
 chmod +x $MYSTART.sh
 ./$MYSTART.sh
 echo "=========================================================="
 
-echo "=========================================================="
-echo "exit"
-echo "=========================================================="
 exit 0
 
 ### END ### \myamilinux\start.sh #############################################################################
