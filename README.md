@@ -7,7 +7,7 @@ Get my scripts from this GIT and run (in the one line command):
 
 or
 
-* MYSITE=my.hostname.here && sudo bash -c "$(wget -q -O- https://raw.githubusercontent.com/applerom/myamilinux/master/start.sh)"
+* export MYSITE=my.hostname.here && sudo bash -c "$(wget -q -O- https://raw.githubusercontent.com/applerom/myamilinux/master/start.sh)"
 
 or
 
