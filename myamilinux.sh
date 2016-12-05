@@ -97,6 +97,8 @@ if [ ! -f $MYSH ] ; then # protect from repeated running
 sudo hostname $MYSITE
 df -k | awk '\$NF=="/"{printf "Disk Usage: %s\n", \$5}'
 EOF
+else
+    sed -i "s|^sudo hostname.*|sudo hostname $MYSITE|" $MYSH
 fi
 echo "=========================================================="
 
