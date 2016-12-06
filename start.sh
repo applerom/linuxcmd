@@ -1,4 +1,4 @@
-#!/usr/bin/bash
+#!/bin/bash
 
 # check for root at first!"
 SWITCH_EXIT=0
@@ -48,7 +48,7 @@ echo "all = $@"
 if [ "$1" ] ; then
 	echo "MYSITE = $1"
 	echo "MYSITEa = $@"
-	MYSITE = $1
+	MYSITE= $1
 else
 	echo "MYSITE = default"
 fi
@@ -58,7 +58,7 @@ echo "=========================================================="
 
 echo "SWITCH_EXIT = $SWITCH_EXIT"
 if SWITCH_EXIT ; then
-    exit
+    #exit
 fi
 exit 0
 
