@@ -1,22 +1,22 @@
 ################################################################################
 ### \myamilinux\start.sh
 ################################################################################
-MYSTART=myamilinux
 
-# check root"
+# check for root at first!"
 SWITCH_EXIT=0
 if [[ $UID != 0 ]] ; then 
     echo "UID = $UID"
     sudo -s
     SWITCH_EXIT=1
     if [[ $UID != 0 ]] ; then 
-        echo "Run only under root! Add sudo at the begin and repeat your command again."
-        echo "Ex.:"
-        echo 'sudo bash -c "$(wget -q -O- https://raw.githubusercontent.com/applerom/$MYSTART/master/start.sh)"'
+        echo "Run only under user with root permissions! Run 'sudo -s' and repeat your command again."
         echo "=========================================================="
         exit 1
     fi
 fi
+
+MYSTART=myamilinux
+
 
 # create tmp dir"
 MY_TMP_DIR=$(mktemp -d /tmp/my_script.XXX) # create_tmp_dir
