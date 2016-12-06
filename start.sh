@@ -4,9 +4,11 @@
 MYSTART=myamilinux
 
 # check root"
+SWITCH_EXIT=0
 if [[ $UID != 0 ]] ; then 
     echo "UID = $UID"
     sudo -s
+    SWITCH_EXIT=1
     if [[ $UID != 0 ]] ; then 
         echo "Run only under root! Add sudo at the begin and repeat your command again."
         echo "Ex.:"
@@ -53,9 +55,13 @@ else
 	echo "MYSITE = default"
 fi
 
-sudo bash $MYSTART.sh
+./$MYSTART.sh
 echo "=========================================================="
 
+echo "SWITCH_EXIT = $SWITCH_EXIT"
+if SWITCH_EXIT ; then
+    exit
+fi
 exit 0
 
 ### END ### \myamilinux\start.sh #############################################################################
