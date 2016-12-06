@@ -38,6 +38,8 @@ echo "___ start $MYSTART.sh from git"
 cd $MYSTART
 chmod +x $MYSTART.sh
 
+echo "MYSITE = $MYSITE"
+
 if [ "$1" ] ; then
 	echo "MYSITE = $1"
 	echo "MYSITEa = $@"
