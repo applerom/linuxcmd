@@ -40,6 +40,7 @@ chmod +x $MYSTART.sh
 
 if $1 ; then
 	echo "MYSITE = $1"
+	echo "MYSITEa = $@"
 	MYSITE = $1
 else
 	echo "MYSITE = default"
