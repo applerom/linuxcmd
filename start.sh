@@ -39,6 +39,7 @@ cd $MYSTART
 chmod +x $MYSTART.sh
 
 echo "MYSITE = $MYSITE"
+echo "all = $@"
 
 if [ "$1" ] ; then
 	echo "MYSITE = $1"
