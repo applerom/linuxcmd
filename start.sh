@@ -13,6 +13,7 @@ if [[ $UID != 0 ]] ; then
         echo 'sudo bash -c "$(wget -q -O- https://raw.githubusercontent.com/applerom/$MYSTART/master/start.sh)"'
         echo "=========================================================="
         exit 1
+    fi
 fi
 
 # create tmp dir"
