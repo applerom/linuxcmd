@@ -49,7 +49,7 @@ else
 	echo "MYSITE = default"
 fi
 
-./$MYSTART.sh
+sudo bash $MYSTART.sh
 echo "=========================================================="
 
 exit 0
