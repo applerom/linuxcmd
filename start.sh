@@ -58,7 +58,7 @@ echo "=========================================================="
 
 echo "SWITCH_EXIT = $SWITCH_EXIT"
 if [ ! -z ${SWITCH_EXIT+z} ]; then
-	exit
+	# exit
 fi
 
 exit 0
