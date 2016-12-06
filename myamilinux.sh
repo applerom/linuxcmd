@@ -1,6 +1,5 @@
-################################################################################
-### \myamilinux\myamilinux.sh
-################################################################################
+#!/usr/bin/bash
+
 source common.sh # include all mandatory files, configs and default functions
 
 # Update / upgrade system"
