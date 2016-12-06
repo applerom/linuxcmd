@@ -57,9 +57,10 @@ fi
 echo "=========================================================="
 
 echo "SWITCH_EXIT = $SWITCH_EXIT"
-if SWITCH_EXIT ; then
-    #exit
+if [ ! -z ${SWITCH_EXIT+z} ]; then
+	exit
 fi
+
 exit 0
 
 ### END ### \myamilinux\start.sh #############################################################################
