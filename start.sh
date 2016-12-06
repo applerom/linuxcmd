@@ -5,11 +5,14 @@ MYSTART=myamilinux
 
 # check root"
 if [[ $UID != 0 ]] ; then 
-	echo "Run only under root! Add sudo at the begin and repeat your command again."
-	echo "Ex.:"
-	echo 'sudo bash -c "$(wget -q -O- https://raw.githubusercontent.com/applerom/$MYSTART/master/start.sh)"'
-	echo "=========================================================="
-	exit 1
+    echo "UID = $UID"
+    sudo -s
+    if [[ $UID != 0 ]] ; then 
+        echo "Run only under root! Add sudo at the begin and repeat your command again."
+        echo "Ex.:"
+        echo 'sudo bash -c "$(wget -q -O- https://raw.githubusercontent.com/applerom/$MYSTART/master/start.sh)"'
+        echo "=========================================================="
+        exit 1
 fi
 
 # create tmp dir"
