@@ -1,12 +1,8 @@
 #!/bin/bash
 
 # check for root at first!"
-SWITCH_EXIT=0
 if [[ $UID != 0 ]] ; then 
-    echo "UID = $UID"
-    sudo -s
-    SWITCH_EXIT=1
-    if [[ $UID != 0 ]] ; then 
+    if sudo -s ; then 
         echo "Run only under user with root permissions! Run 'sudo -s' and repeat your command again."
         echo "=========================================================="
         exit 1
@@ -55,11 +51,6 @@ fi
 
 ./$MYSTART.sh
 echo "=========================================================="
-
-echo "SWITCH_EXIT = $SWITCH_EXIT"
-if [ ! -z ${SWITCH_EXIT+z} ]; then
-	# exit
-fi
 
 exit 0
 
