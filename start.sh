@@ -38,9 +38,9 @@ echo "___ start $MYSTART.sh from git"
 cd $MYSTART
 chmod +x $MYSTART.sh
 
-if [ ! -z ${MYSITE+z} ]; then
-	echo "MYSITE = $MYSITE"
-	export $MYSITE
+if $1 ; then
+	echo "MYSITE = $1"
+	MYSITE = $1
 else
 	echo "MYSITE = default"
 fi
