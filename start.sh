@@ -6,7 +6,7 @@ MYSTART=myamilinux
 if [[ $UID != 0 ]] ; then 
     echo "Run only under root! Add sudo at the begin and repeat your command again."
     echo "Ex.:"
-    echo 'sudo bash -c "$(wget -q -O- https://raw.githubusercontent.com/applerom/$MYSTART/master/start.sh)"'
+    echo 'sudo MYSITE=my.amilinux bash -c "$(wget -q -O- https://raw.githubusercontent.com/applerom/myamilinux/master/start.sh)"'
     echo "=========================================================="
     exit 1
 fi

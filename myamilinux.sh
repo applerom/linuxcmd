@@ -10,18 +10,9 @@ echo "=========================================================="
 sudo yum install -y mc ftp lynx
 echo "=========================================================="
 
-# Set nice prompt
-MYPS1="PS1='" #init/begin
-MYPS1+="$Blue"
-MYPS1+="__________________________________________________________" # long string of _spaces_ for comfortable reading
-MYPS1+=" \`if [ \$? = 0 ]; then echo \"$Checkmark\"; else echo \"$FancyX\" ; fi\`" # TRUE or FALSE of last operation
-MYPS1+=" \`if [[ \$EUID == 0 ]]; then echo \"\"; else echo \"$Red\\u$White@\" ; fi\`" # show  current username (nothing for root)
-MYPS1+="$Yellow\\H" # Hostname
-MYPS1+=" $Blue$MyDateTime\n" # current time & date and new string
-MYPS1+=" $Cyan\\w $GreenLight\\\$$NoColour " # current dir + $
-MYPS1+="'" #end of PS1
-if ! grep -q "EUID == 0" $MYHOME/$AUTOEXEC_FILE ; then	# protect from repeated running
-	echo $MYPS1 >> $MYHOME/$AUTOEXEC_FILE
+# Set nice prompt (float wigth)
+if ! grep -q "myprompt" $MYHOME/$AUTOEXEC_FILE ; then	# protect from repeated running
+	cat prompt.sh >> $MYHOME/$AUTOEXEC_FILE
 	if [ -z ${SUDOMC+z} ]; then						# add autostart mc if it was added in config
 		echo $SUDOMC >> $MYHOME/$AUTOEXEC_FILE
 	fi
