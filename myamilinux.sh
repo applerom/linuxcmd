@@ -10,7 +10,7 @@ echo "=========================================================="
 sudo yum install -y mc ftp lynx
 echo "=========================================================="
 
-# Set nice prompt
+# Set nice prompt (fixed wigth)
 MYPS1="PS1='" #init/begin
 MYPS1+="$Blue"
 MYPS1+="__________________________________________________________" # long string of _spaces_ for comfortable reading
