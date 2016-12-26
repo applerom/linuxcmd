@@ -13,6 +13,7 @@ echo "=========================================================="
 # Set nice prompt (float wigth)
 if ! grep -q "myprompt" $MYHOME/$AUTOEXEC_FILE ; then	# protect from repeated running
 	cat prompt.sh >> $MYHOME/$AUTOEXEC_FILE
+    cat prompt.sh >> /root/$AUTOEXEC_FILE
 	if [ -z ${SUDOMC+z} ]; then						# add autostart mc if it was added in config
 		echo $SUDOMC >> $MYHOME/$AUTOEXEC_FILE
 	fi
