@@ -1,7 +1,5 @@
 #!/bin/bash
 
-MYSTART=myamilinux
-
 # check for root at first!"
 if [[ $UID != 0 ]] ; then 
     echo "Run only under root! Add sudo at the begin and repeat your command again."
@@ -23,23 +21,31 @@ chmod 700 $MY_TMP_DIR
 
 # check for git"
 if ! which git > /dev/null 2> /dev/null ; then
-	echo "___Install git"
-	yum install -y git
-	echo "=========================================================="
+    echo "___Install git"
+    if which yum > /dev/null 2> /dev/null ; then
+        yum install -y git
+    fi
+    if which apt-get > /dev/null 2> /dev/null ; then
+        apt-get install -y git
+    fi
+    if which zypper > /dev/null 2> /dev/null ; then
+        zypper install -y git
+    fi
+    echo "=========================================================="
 fi
 
 echo "___ clone from git to tmp $MY_TMP_DIR"
 cd $MY_TMP_DIR
-git clone https://github.com/applerom/$MYSTART
+git clone https://github.com/applerom/linuxcmd
 echo "=========================================================="
 
 echo "___ start $MYSTART.sh from git"
-cd $MYSTART
-chmod +x $MYSTART.sh
+cd linuxcmd
+chmod +x linuxcmd.sh
 
-./$MYSTART.sh
+./linuxcmd.sh
 echo "=========================================================="
 
 exit 0
 
-### END ### \myamilinux\start.sh #############################################################################
+## EOF
