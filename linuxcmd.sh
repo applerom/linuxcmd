@@ -31,7 +31,7 @@ echo "sudo hostname $MYSITE" > my.sh # create my.sh
 case $DIST_TYPE in
 	debian)
         MYUSER=admin
-        echo "Debian \`cat /etc/debian_version\`" >> my.sh
+        echo 'echo "Debian `cat /etc/debian_version`"' >> my.sh
 		AUTOEXEC_FILE=".bashrc"
         MY_LOG=syslog
         MPM=apt-get
@@ -49,7 +49,7 @@ case $DIST_TYPE in
         MPM=yum
 	;;
 	centos)
-        echo $DIST >> my.sh
+        echo 'echo "`cat /home/centos/etc/centos-release`"' >> my.sh
 		AUTOEXEC_FILE=".bashrc"
         MYUSER=centos
         MY_LOG=messages
@@ -121,15 +121,15 @@ function nano_tuning {
 function vim_nano {
     if [[ $REPLACE_VIM_WITH_NANO == "yes" ]] ; then
         if [ -f /bin/vi_orig ] ; then # protect from repeated running
-            rm /bin/vi	
-            ln -s /usr/bin/nano /bin/vi
-            rm /usr/bin/vim
-            ln -s /usr/bin/nano /usr/bin/vim
+            rm /bin/vi                          > /dev/null 2> /dev/null
+            ln -s /usr/bin/nano /bin/vi	        > /dev/null 2> /dev/null
+            rm /usr/bin/vim	                    > /dev/null 2> /dev/null
+            ln -s /usr/bin/nano /usr/bin/vim	> /dev/null 2> /dev/null
         else
-            mv /bin/vi /bin/vi_orig
-            ln -s /usr/bin/nano /bin/vi
-            mv /usr/bin/vim /usr/bin/vim_orig
-            ln -s /usr/bin/nano /usr/bin/vim
+            mv /bin/vi /bin/vi_orig             > /dev/null 2> /dev/null
+            ln -s /usr/bin/nano /bin/vi         > /dev/null 2> /dev/null
+            mv /usr/bin/vim /usr/bin/vim_orig	> /dev/null 2> /dev/null
+            ln -s /usr/bin/nano /usr/bin/vim	> /dev/null 2> /dev/null
         fi
     fi
 }
