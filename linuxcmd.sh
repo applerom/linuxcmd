@@ -1,5 +1,7 @@
 #!/bin/bash
 
+## this file is runiing in the $MY_TMP_DIR
+
 if [ -z ${MYSITE+z} ]; then
 	MYSITE=linux.cmd # enter name (DNS) of your system here
 fi
@@ -24,30 +26,30 @@ source_my_inc_file funcs.sh
 #source_my_inc_file vars.cfg.sh
 
 get_os_info
+echo "DIST_TYPE = $DIST_TYPE"
+echo "sudo hostname $MYSITE" > my.sh # create my.sh
 case $DIST_TYPE in
 	debian)
         MYUSER=admin
-		OS_VER_SHOW="Debian \`cat /etc/debian_version\`"
+        echo "Debian \`cat /etc/debian_version\`" >> my.sh
 		AUTOEXEC_FILE=".bashrc"
         MY_LOG=syslog
         MPM=apt-get
 	;;
 	ubuntu)
         MYUSER=ubuntu
-		OS_VER_SHOW=""
 		AUTOEXEC_FILE=".profile"
         MY_LOG=syslog
         MPM=apt-get
 	;;
 	amzn)
-		OS_VER_SHOW=""
 		AUTOEXEC_FILE=".bashrc"
         MYUSER=ec2-user
         MY_LOG=messages
         MPM=yum
 	;;
 	centos)
-		OS_VER_SHOW=$DIST
+        echo $DIST >> my.sh
 		AUTOEXEC_FILE=".bashrc"
         MYUSER=centos
         MY_LOG=messages
@@ -58,6 +60,7 @@ case $DIST_TYPE in
 		exit 1
 	;;
 esac
+echo "df -k | awk '\$NF==\"/\"{printf \"Disk Usage: %s\n\", \$5}'" >> my.sh
 MYHOME=/home/$MYUSER
 
 # Update / upgrade system"
@@ -66,13 +69,13 @@ function update_system {
         yum -y update
     else
         apt-get update
-        apt-get upgrade -y
+        apt-get -y -o Dpkg::Options::=--force-confdef -o Dpkg::Options::=--force-confold dist-upgrade
     fi
 }
 
 # Install useful packets
 function useful_packets {
-    $MPM install -y mc ftp bzip2 zip nano lynx wget telnet
+    $MPM install -y mc ftp bzip2 zip nano lynx wget curl telnet
 }
 
 # Set nice prompt (float wigth)
@@ -133,19 +136,25 @@ function vim_nano {
 
 function internal_mcedit {
     if [[ $USE_INTERNAL_EDITOR_FOR_MC == "no" ]] ; then
-        if [ -f $MYHOME/.mc/ini ] ; then
-            sed -i "s|^use_internal_edit=.*|use_internal_edit=0|" $MYHOME/.mc/ini
+        if mc -V | grep "Midnight Commander 4.7" ; then # directory for old mc version (to ex. in AMILinux)
+            MC_XDG=""
         else
-            mkdir $MYHOME/.mc > /dev/null 2> /dev/null
-            echo "[Midnight-Commander]" > $MYHOME/.mc/ini
-            echo "use_internal_edit=0" >> $MYHOME/.mc/ini
+            MC_XDG="config/" # 4.8+ use XDG-support path for config files
         fi
-        if [ -f /root/.mc/ini ] ; then
-            sed -i "s|^use_internal_edit=.*|use_internal_edit=0|" /root/.mc/ini
+
+        if [ -f $MYHOME/.${MC_XDG}mc/ini ] ; then
+            sed -i "s|^use_internal_edit=.*|use_internal_edit=0|" $MYHOME/.${MC_XDG}mc/ini
         else
-            mkdir /root/.mc > /dev/null 2> /dev/null
-            echo "[Midnight-Commander]" > /root/.mc/ini
-            echo "use_internal_edit=0" >> /root/.mc/ini
+            mkdir -p $MYHOME/.${MC_XDG}mc > /dev/null 2> /dev/null
+            echo "[Midnight-Commander]" > $MYHOME/.${MC_XDG}mc/ini
+            echo "use_internal_edit=0" >> $MYHOME/.${MC_XDG}mc/ini
+        fi
+        if [ -f /root/.${MC_XDG}mc/ini ] ; then
+            sed -i "s|^use_internal_edit=.*|use_internal_edit=0|" /root/.${MC_XDG}mc/ini
+        else
+            mkdir -p /root/.${MC_XDG}mc > /dev/null 2> /dev/null
+            echo "[Midnight-Commander]" > /root/.${MC_XDG}mc/ini
+            echo "use_internal_edit=0" >> /root/.${MC_XDG}mc/ini
         fi
     fi
 }
@@ -160,7 +169,7 @@ function false_shells {
 # Install custom script for startup"
 function custom_script {
     if [ ! -f $MYSH ] ; then # protect from repeated running
-        cat mysh_$DIST_TYPE.sh >> $MYSH
+        cat my.sh >> $MYSH
     else
         sed -i "s|^sudo hostname.*|sudo hostname $MYSITE|" $MYSH
     fi
