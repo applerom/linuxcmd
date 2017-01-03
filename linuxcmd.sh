@@ -184,7 +184,7 @@ useful_packets
 set_myprompt
 useful_links
 certs_dir
-vim_nano
+#vim_nano
 internal_mcedit
 false_shells
 custom_script
