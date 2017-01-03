@@ -1,4 +1,4 @@
-#!/bin/bash -x
+#!/bin/bash
 
 ## this file is runiing in the $MY_TMP_DIR
 
@@ -9,21 +9,69 @@ fi
 MYSH=/etc/profile.d/my.sh
 MYCERT_DIR=/root/certs
 #SUDOMC="sudo -H mc"
-REPLACE_VIM_WITH_NANO=yes
+REPLACE_VIM_WITH_NANO=no
 USE_INTERNAL_EDITOR_FOR_MC=no
 
-function source_my_inc_file {	
-	if [ -f $1 ] ; then
-		source $1
-	else
-		echo "Not found file $1"
-		exit 1
-	fi
+lowercase(){
+    echo "$1" | sed "y/ABCDEFGHIJKLMNOPQRSTUVWXYZ/abcdefghijklmnopqrstuvwxyz/"
 }
-# include all mandatory files, configs and default functions
-source_my_inc_file colours.inc.sh
-source_my_inc_file funcs.sh
-#source_my_inc_file vars.cfg.sh
+
+function get_os_info () {
+	OS=`lowercase \`uname\``
+	KERNEL=`uname -r`
+	BITS=`uname -m`
+
+	if [ "${OS}" = "linux" ] ; then
+	  # Figure out which OS we are running on
+	  if [ -f /etc/os-release ]; then
+		  source /etc/os-release
+		  DIST_TYPE=$ID
+		  DIST=$NAME
+		  REV=$VERSION_ID
+		  PSEUDONAME=$PRETTY_NAME
+	  elif [ -f /usr/lib/os-release ]; then
+		  source /usr/lib/os-release
+		  DIST_TYPE=$ID
+		  DIST=$NAME
+		  REV=$VERSION_ID
+	  elif [ -f /etc/redhat-release ]; then
+		  DIST_TYPE='RedHat'
+		  DIST=`cat /etc/redhat-release |sed s/\ release.*//`
+		  PSEUDONAME=`cat /etc/redhat-release | sed s/.*\(// | sed s/\)//`
+		  REV=`cat /etc/redhat-release | sed s/.*release\ // | sed s/\ .*//`
+	  elif [ -f /etc/system-release ]; then
+		  if grep "Amazon Linux AMI" /etc/system-release; then
+			DIST_TYPE='amzn'
+		  fi
+		  DIST=`cat /etc/system-release |sed s/\ release.*//`
+		  PSEUDONAME=`cat /etc/system-release | sed s/.*\(// | sed s/\)//`
+		  REV=`cat /etc/system-release | sed s/.*release\ // | sed s/\ .*//`
+	  elif [ -f /etc/SuSE-release ] ; then
+		  DIST_TYPE='SuSe'
+		  PSEUDONAME=`cat /etc/SuSE-release | tr "\n" ' '| sed s/VERSION.*//`
+		  REV=`cat /etc/SuSE-release | tr "\n" ' ' | sed s/.*=\ //`
+	  elif [ -f /etc/mandrake-release ] ; then
+		  DIST_TYPE='Mandrake'
+		  PSEUDONAME=`cat /etc/mandrake-release | sed s/.*\(// | sed s/\)//`
+		  REV=`cat /etc/mandrake-release | sed s/.*release\ // | sed s/\ .*//`
+	  elif [ -f /etc/debian_version ] ; then
+		  DIST_TYPE='Debian'
+		  DIST=`cat /etc/lsb-release | grep '^DISTRIB_ID' | awk -F=  '{ print $2 }'`
+		  PSEUDONAME=`cat /etc/lsb-release | grep '^DISTRIB_CODENAME' | awk -F=  '{ print $2 }'`
+		  REV=`cat /etc/lsb-release | grep '^DISTRIB_RELEASE' | awk -F=  '{ print $2 }'`
+	  fi
+	  if [ -f /etc/UnitedLinux-release ] ; then
+		  DIST="${DIST}[`cat /etc/UnitedLinux-release | tr "\n" ' ' | sed s/VERSION.*//`]"
+	  fi
+	fi
+
+	if [ "{$OS}" == "darwin" ]; then
+		OS=mac
+	fi
+
+	DIST_TYPE=`lowercase $DIST_TYPE`
+	UNIQ_OS_ID="${DIST_TYPE}-${KERNEL}-${BITS}"
+}
 
 get_os_info
 echo "DIST_TYPE = $DIST_TYPE"
@@ -184,7 +232,7 @@ set_myprompt
 useful_links
 certs_dir
 nano_tuning
-#vim_nano
+vim_nano
 internal_mcedit
 false_shells
 custom_script
