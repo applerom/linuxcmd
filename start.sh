@@ -26,6 +26,7 @@ if ! which git > /dev/null 2> /dev/null ; then
         yum install -y git
     fi
     if which apt-get > /dev/null 2> /dev/null ; then
+        apt-get update
         apt-get install -y git
     fi
     if which zypper > /dev/null 2> /dev/null ; then

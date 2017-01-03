@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -x
 
 ## this file is runiing in the $MY_TMP_DIR
 
@@ -68,7 +68,6 @@ function update_system {
     if [[ $DIST_TYPE == "amzn" || $DIST_TYPE == "centos" ]] ; then
         yum -y update
     else
-        apt-get update
         apt-get -y -o Dpkg::Options::=--force-confdef -o Dpkg::Options::=--force-confold dist-upgrade
     fi
 }
@@ -184,6 +183,7 @@ useful_packets
 set_myprompt
 useful_links
 certs_dir
+nano_tuning
 #vim_nano
 internal_mcedit
 false_shells
