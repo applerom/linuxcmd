@@ -92,11 +92,10 @@ function set_myprompt {
 # Create www dir and useful links"
 function useful_links {
     mkdir -p /var/www
-    ln -s /var/www $MYHOME			> /dev/null 2> /dev/null
-    ln -s /etc $MYHOME				> /dev/null 2> /dev/null
-    ln -s /usr/local/src $MYHOME	> /dev/null 2> /dev/null
-    ln -s /var/log $MYHOME			> /dev/null 2> /dev/null
-    ln -s /var/log/$MY_LOG $MYHOME	> /dev/null 2> /dev/null
+    for MYPATH in  /var/www  /etc  /usr/local/src  /usr  /var/log  /var/log/$MY_LOG
+    do
+        ln -s $MYPATH $MYHOME > /dev/null 2> /dev/null
+    done
 }
 
 # Create certs dir"
