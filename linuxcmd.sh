@@ -129,7 +129,8 @@ function useful_packets {
 function set_myprompt {
     if ! grep -q "myprompt" $MYHOME/$AUTOEXEC_FILE ; then	# protect from repeated running
         cat prompt.sh >> $MYHOME/$AUTOEXEC_FILE
-        cat prompt.sh >> /root/.bashrc
+        cat alias.sh >> $MYHOME/$AUTOEXEC_FILE
+        cat prompt.sh >> /root/.bashrc  # .bashrc
         if [ -z ${SUDOMC+z} ]; then						# add autostart mc if it was added in config
             echo $SUDOMC >> $MYHOME/$AUTOEXEC_FILE
         fi
@@ -156,10 +157,10 @@ function nano_tuning {
     sed -i 's|color green|color brightgreen|' /usr/share/nano/xml.nanorc
     sed -i 's~(cat|cd|chmod|chown|cp|echo|env|export|grep|install|let|ln|make|mkdir|mv|rm|sed|set|tar|touch|umask|unset)~(apt-get|awk|cat|cd|chmod|chown|cp|cut|echo|env|export|grep|install|let|ln|make|mkdir|mv|rm|sed|set|tar|touch|umask|unset)~' /usr/share/nano/sh.nanorc
 
-    if ! grep -q "/bin/nano" $MYHOME/.selected_editor > /dev/null 2> /dev/null ; then # protect from repeated running
+    if ! grep -q "SELECTED_EDITOR" $MYHOME/.selected_editor > /dev/null 2> /dev/null ; then # protect from repeated running
         echo "SELECTED_EDITOR=/bin/nano" >> $MYHOME/.selected_editor
     fi
-    if ! grep -q "/bin/nano" /root/.selected_editor > /dev/null 2> /dev/null ; then # protect from repeated running
+    if ! grep -q "SELECTED_EDITOR" /root/.selected_editor > /dev/null 2> /dev/null ; then # protect from repeated running
         echo "SELECTED_EDITOR=/bin/nano" >> /root/.selected_editor
     fi
 }
