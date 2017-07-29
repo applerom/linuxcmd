@@ -3,7 +3,10 @@
 ## this file is runiing in the $MY_TMP_DIR
 
 if [ -z ${MYSITE+z} ]; then
-	MYSITE=linux.cmd # enter name (DNS) of your system here
+    read -p "Enter domain.name: " -e MYSITE
+    if [ -z ${MYSITE+z} ]; then
+        MYSITE=linux.cmd # enter name (DNS) of your system here
+    fi
 fi
 
 MYSH=/etc/profile.d/my.sh
@@ -86,7 +89,7 @@ case $DIST_TYPE in
 	;;
 	ubuntu)
         MYUSER=ubuntu
-		AUTOEXEC_FILE=".profile"
+		AUTOEXEC_FILE=".bashrc" # ".profile"
         MY_LOG=syslog
         MPM=apt-get
 	;;
@@ -116,7 +119,8 @@ function update_system {
     if [[ $DIST_TYPE == "amzn" || $DIST_TYPE == "centos" ]] ; then
         yum -y update
     else
-        apt-get -y -o Dpkg::Options::=--force-confdef -o Dpkg::Options::=--force-confold dist-upgrade
+        apt-get update
+        ##apt-get -y -o Dpkg::Options::=--force-confdef -o Dpkg::Options::=--force-confold dist-upgrade
     fi
 }
 
@@ -130,7 +134,7 @@ function set_myprompt {
     if ! grep -q "myprompt" $MYHOME/$AUTOEXEC_FILE ; then	# protect from repeated running
         cat prompt.sh >> $MYHOME/$AUTOEXEC_FILE
         cat alias.sh >> $MYHOME/$AUTOEXEC_FILE
-        cat prompt.sh >> /root/.bashrc  # .bashrc
+        cat prompt.sh >> /root/$AUTOEXEC_FILE  # .bashrc
         if [ -z ${SUDOMC+z} ]; then						# add autostart mc if it was added in config
             echo $SUDOMC >> $MYHOME/$AUTOEXEC_FILE
         fi
