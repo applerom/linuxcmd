@@ -117,7 +117,7 @@ MYHOME=/home/$MYUSER
 # Update / upgrade system"
 function update_system {
     if [[ $DIST_TYPE == "amzn" || $DIST_TYPE == "centos" ]] ; then
-        yum -y update
+        yum update -y
     else
         apt-get update
         ##apt-get -y -o Dpkg::Options::=--force-confdef -o Dpkg::Options::=--force-confold dist-upgrade
