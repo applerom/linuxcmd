@@ -9,7 +9,7 @@ myprompt()
         HOSTNAME=`hostname`
         tput setaf 4 # Set foreground color Blue
         # make flexible padding
-        PADDING=`printf "%*s" $(($(tput cols)-24-${#HOSTNAME}-${#USER})) "" | sed "s| |_|g"`
+        PADDING=`printf "%*s" $(($(tput cols)-24-${#HOSTNAME}-${#USER})) | sed "s| |_|g"`
         printf "$PADDING"
         
         if [ $LASTOPER == "GOOD" ]; then
@@ -47,3 +47,4 @@ myprompt()
                 printf " $(date +%T)"
 }
 PS1='$(myprompt)\n \[\e[0;36m\]\w \[\e[01;32m\]\$\[\e[00m\] '
+
