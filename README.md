@@ -15,10 +15,16 @@ or
 or (for distrs with curl istead wget by default)
 
 
-* sudo MYSITE=_linux.cmd_ bash -c "$(curl https://raw.githubusercontent.com/applerom/linuxcmd/master/start.sh)"
+* sudo bash -c "$(curl https://raw.githubusercontent.com/applerom/linuxcmd/master/start.sh)"
 
 
 or
+
+
+* sudo MYSITE=_linux.cmd_ bash -c "$(curl https://raw.githubusercontent.com/applerom/linuxcmd/master/start.sh)"
+
+
+or (for logging)
 
 
 * sudo MYSITE=_linux.cmd_ bash -c -x "$(wget -q -O- https://raw.githubusercontent.com/applerom/linuxcmd/master/start.sh)" > 1.txt
