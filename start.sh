@@ -37,7 +37,10 @@ fi
 
 echo "___ clone from git to tmp $MY_TMP_DIR"
 cd $MY_TMP_DIR
-git clone https://github.com/applerom/linuxcmd
+
+BRANCH=${BRANCH:-master}
+git clone -b $BRANCH https://github.com/applerom/linuxcmd
+
 echo "=========================================================="
 
 echo "___ start $MYSTART.sh from git"
