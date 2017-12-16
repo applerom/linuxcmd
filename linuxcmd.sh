@@ -112,7 +112,14 @@ case $DIST_TYPE in
 	;;
 esac
 echo "df -k | awk '\$NF==\"/\"{printf \"Disk Usage: %s\n\", \$5}'" >> my.sh
-MYHOME=/home/$MYUSER
+
+if [ -d "/home/$MYUSER" ]; then
+    MYHOME=/home/$MYUSER
+else
+    MYUSER=root ## Docker has got only root
+    MYHOME=/root
+fi
+
 
 # Update / upgrade system"
 function update_system {
