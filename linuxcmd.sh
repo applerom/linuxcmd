@@ -167,6 +167,7 @@ function certs_dir {
 function nano_tuning {
     sed -i 's|color green|color brightgreen|' /usr/share/nano/xml.nanorc
     sed -i 's~(cat|cd|chmod|chown|cp|echo|env|export|grep|install|let|ln|make|mkdir|mv|rm|sed|set|tar|touch|umask|unset)~(apt-get|awk|cat|cd|chmod|chown|cp|cut|echo|env|export|grep|install|let|ln|make|mkdir|mv|rm|sed|set|tar|touch|umask|unset)~' /usr/share/nano/sh.nanorc
+    wget https://raw.githubusercontent.com/serialhex/nano-highlight/master/yaml.nanorc -O /usr/share/nano/yaml.nanorc
 
     if ! grep -q "SELECTED_EDITOR" $MYHOME/.selected_editor > /dev/null 2> /dev/null ; then # protect from repeated running
         echo "SELECTED_EDITOR=/bin/nano" >> $MYHOME/.selected_editor
