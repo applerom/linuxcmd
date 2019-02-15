@@ -142,6 +142,7 @@ function set_myprompt {
         cat prompt.sh >> $MYHOME/$AUTOEXEC_FILE
         cat alias.sh >> $MYHOME/$AUTOEXEC_FILE
         cat prompt.sh >> /root/$AUTOEXEC_FILE  # .bashrc
+        echo "export TERM=xterm-256color" >> /root/$AUTOEXEC_FILE  # fix missing TERM in some dockers or kubernetes 
         if [ -z ${SUDOMC+z} ]; then						# add autostart mc if it was added in config
             echo $SUDOMC >> $MYHOME/$AUTOEXEC_FILE
         fi
