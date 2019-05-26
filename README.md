@@ -44,5 +44,3 @@ and
 or
 
 * sudo bash ./linuxcmd.sh
-
-p.s. Подробности на русском: https://linuxcmd.ru
