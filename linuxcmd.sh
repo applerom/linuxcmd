@@ -133,7 +133,7 @@ function update_system {
 
 # Install useful packets
 function useful_packets {
-    $MPM install -y mc ftp bzip2 zip nano lynx wget curl telnet
+    $MPM install -y mc ftp bzip2 zip nano lynx wget curl telnet hostname
 }
 
 # Set nice prompt (float wigth)
