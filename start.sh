@@ -38,7 +38,7 @@ fi
 echo "___ clone from git to tmp $MY_TMP_DIR"
 cd $MY_TMP_DIR
 
-BRANCH=${BRANCH:-master}
+BRANCH=${BRANCH:-dev}
 git clone -b $BRANCH https://github.com/applerom/linuxcmd
 
 echo "=========================================================="
