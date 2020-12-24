@@ -95,7 +95,11 @@ case $DIST_TYPE in
 	;;
 	amzn)
 		AUTOEXEC_FILE=".bashrc"
-        MYUSER=ec2-user
+        if [ -d "/home/cloudshell-user" ]; then
+            MYUSER=cloudshell-user
+        else
+            MYUSER=ec2-user
+        fi
         MY_LOG=messages
         MPM=yum
 	;;
